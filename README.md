@@ -47,6 +47,31 @@ GEMINI_API_KEY="your_gemini_api_key_here"
 PORT=3001
 ```
 
+## curls
+```
+  curl --request POST \
+  --url https://loreal-assignment-backend.onrender.com/claims/assess \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "productName": "Radiant Glow Serum",
+  "claimText": "Reduces wrinkles by 20% in 4 weeks",
+  "evidenceText": "A 12-week clinical study on 120 participants reported a 18% improvement in wrinkle depth compared with baseline. The 20% threshold was not reached with statistical significance (p=0.08).",
+  "studyType": "Clinical Trial"
+}'
+```
+
+```
+curl --request post \
+  --url https://loreal-assignment-backend.onrender.com/claims/assess \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "productName": "HydraLift Pro Moisturizer",
+  "claimText": "Improves skin hydration by 30% within 2 hours of application",
+  "evidenceText": "A double-blind, placebo-controlled clinical study conducted on 150 participants over 8 weeks. Corneometer measurements recorded a statistically significant 34% increase in stratum corneum hydration at the 2-hour post-application mark (p<0.001). Results were consistent across all skin types.",
+  "studyType": "Double-Blind RCT"
+}'
+```
+
 ## Deployment notes
 - The backend is deployed on [Render](https://render.com).
 - Production environment variables such as `DATABASE_URL`, `GEMINI_API_KEY`, and `PORT` are configured in the Render dashboard, not stored in the repo.
