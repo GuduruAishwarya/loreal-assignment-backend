@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Relational SQL database: PostgreSQL is preferred for this workflow because
+// claim-to-assessment is a clear one-to-many relationship with audit/history needs.
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Claim {
+  id          String      @id @default(cuid())
+  productName String
+  claimText   String
+  status      ClaimStatus @default(DRAFT)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  assessments Assessment[]
+}
+
+model Assessment {
+  id              String   @id @default(cuid())
+  claimId         String
+  justified       Boolean
+  confidenceScore Float
+  reasoning       String
+  rawResponse     Json?
+  createdAt       DateTime @default(now())
+
+  claim Claim @relation(fields: [claimId], references: [id], onDelete: Cascade)
+
+  @@index([claimId])
+}
+
+enum ClaimStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+}
