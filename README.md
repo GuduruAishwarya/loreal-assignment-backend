@@ -1,6 +1,15 @@
-# Loreal Claims Backend
+# Claims Backend
 
 A NestJS backend for AI-assisted claims evaluation using Gemini and Supabase PostgreSQL.
+
+## Live Deployment
+
+**Base URL:** https://loreal-assignment-backend.onrender.com
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/claims` | Fetch all claims |
+| POST | `/claims/assess` | Submit and assess a claim |
 
 ## Features
 - NestJS API with validation
@@ -39,6 +48,11 @@ PORT=3001
 ```
 
 ## Deployment notes
-- This app is ready for deployment with a Node host such as Render or Railway.
+- The backend is deployed on [Render](https://render.com).
+- Production environment variables such as `DATABASE_URL`, `GEMINI_API_KEY`, and `PORT` are configured in the Render dashboard, not stored in the repo.
 - The app binds to `0.0.0.0` and reads the `PORT` environment variable for hosting compatibility.
 - Prisma is generated automatically after install via `postinstall`.
+- **Important:** Use the Supabase **Transaction Pooler** URL (port `6543`) for `DATABASE_URL` in cloud deployments — the direct connection (port `5432`) may be unreachable from Render's servers.
+  ```
+  postgresql://postgres.your-project-id:[PASSWORD]@aws-0-region.pooler.supabase.com:6543/postgres?sslmode=require
+  ```
